@@ -8,7 +8,7 @@ const router = express.Router();
 const products = [];
 
 router.get('/add-product', (req, res, next) => {
-  res.render('add-product', { pageTitle: 'Add product' });
+  res.render('add-product', { pageTitle: 'Add product', path: '/add-product' });
 });
 
 //same as app.use() but only trigger for post requests.
