@@ -45,3 +45,31 @@ main {
   text-decoration: none;
   color: #663cff;
 }
+
+button {
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.primary-btn {
+  background-color: #663cff;
+  color: white;
+}
+
+.primary-btn:hover {
+  background-color: #472aaf;
+}
+
+.secondary-btn {
+  background-color: white;
+  color: #663cff;
+  border: 2px solid #663cff;
+}
+
+.secondary-btn:hover {
+  color: #472aaf;
+  border: 2px solid #472aaf;
+  background-color: #e6e0fd;
+}
