@@ -1,17 +1,8 @@
-const path = require('path');
 const express = require('express');
-const rootDir = require('../util/path');
-
 const router = express.Router();
-const adminData = require('./admin');
+const productsController = require('../controllers/products');
 
 // The default response middleware
-router.get('/', (req, res, next) => {
-  console.log(adminData.products);
-  const products = adminData.products;
-  //sends a pug file, we only write shop cause the root folder is already declared in app.js
-  // we pass data to the template
-  res.render('shop', { prods: products, pageTitle: 'Shop', path: '/' });
-});
+router.get('/', productsController.getProducts);
 
 module.exports = router;
