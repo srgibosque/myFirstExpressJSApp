@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Sets pug as the default template engine
-app.set('view engine', 'pug');
+// app.set('view engine', 'pug');
+// Sets pug as the default template engine
+app.set('view engine', 'ejs');
 // tells express in which folder the templates (pug files) are located
 app.set('views', 'views');
 
