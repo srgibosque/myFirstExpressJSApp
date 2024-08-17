@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const Cart = require('../models/cart');
 
 exports.getIndex = (req, res, next) => {
   //Is the callback which returns the products
@@ -38,6 +39,14 @@ exports.getCart = (req, res, next) => {
     pageTitle: 'Cart',
       path: '/cart'
   });
+}
+
+exports.postCart = (req, res, next) => {
+  const productId = req.body.productId;
+  Product.findById(productId, (product) => {
+    Cart.addProduct(productId, product.price);
+  });
+  res.redirect('/cart');
 }
 
 exports.getOrders = (req, res, next) => {

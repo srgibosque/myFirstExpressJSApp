@@ -16,8 +16,6 @@
     <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
     <h3><%= product.price %></h3>
     <p><%= product.description %></p>
-    <form action="/add-to-cart" method="post">
-      <button class="secondary-btn card-btn" type="submit">Add to cart</button>
-    </form>
+    <%- include('../shared/add-to-cart.ejs') %>
   </main>
 </body>

@@ -32,9 +32,7 @@
                 <button class="secondary-btn card-btn" type="button">
                   <a href="/products/<%= product.id %>">Product detail</a>
                 </button>
-                <form action="/add-to-cart" method="post">
-                  <button class="secondary-btn card-btn" type="submit">Add to cart</button>
-                </form>
+                <%- include('../shared/add-to-cart.ejs', {product: product}) %>
               </div>
             </header>
           </article>
