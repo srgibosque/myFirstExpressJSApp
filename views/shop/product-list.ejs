@@ -29,7 +29,9 @@
                 <p class="product__description"><%= product.description %></p>
               </div>
               <div class="card__actions">
-                <button class="secondary-btn card-btn">Add to cart</button>
+                <form action="/add-to-cart" method="post">
+                  <button class="secondary-btn card-btn" type="submit">Add to cart</button>
+                </form>
               </div>
             </header>
           </article>

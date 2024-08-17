@@ -48,6 +48,12 @@
   margin: 0;
 }
 
+.card__actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+}
+
 .card-btn {
   width: 100%;
 }
