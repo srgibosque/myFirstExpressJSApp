@@ -6,6 +6,8 @@ const p = path.join(
   'products.json'
 );
 
+const Cart = require('./cart');
+
 const getProductsFromFile = (callback) => {
   // Thanks to the callback we can wait for the array to be fetched. Avoiding to be undefined. 
   fs.readFile(p, (err, fileContent) => {
@@ -47,10 +49,12 @@ module.exports = class Product {
 
   static deleteById(id){
     getProductsFromFile((products) => {
+      const product = products.find(product => product.id === id);
       const newProductsArray = products.filter(p => p.id !== id);
       fs.writeFile(p, JSON.stringify(newProductsArray), err => {
         if (!err) {
           // remove product from the cart
+          Cart.deleteProduct(id, product.price);
         }
       });
     });
