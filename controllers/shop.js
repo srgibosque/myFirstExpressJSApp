@@ -2,43 +2,42 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
-    .then(([rows, fieldData]) => {
+  // findAll is a sequelize method to interact with the db
+  Product.findAll()
+    .then(products => {
       res.render('shop/product-list', {
-        prods: rows,
+        prods: products,
         pageTitle: 'Shop',
         path: '/'
       });
     })
-    .catch(err => {
-      console.error(err);
-    });
+    .catch(err => console.error(err));
 }
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
-    .then(([rows, fieldData]) => {
+  Product.findAll()
+    .then(products => {
       res.render('shop/product-list', {
-        prods: rows,
+        prods: products,
         pageTitle: 'Products',
         path: '/products'
       });
     })
-    .catch(err => {
-      console.error(err);
-    });
+    .catch(err => console.error(err));
 }
 
 exports.getProduct = (req, res, next) => {
   const productId = req.params.productId;
-  Product.findById(productId)
-    .then(([rows]) => {
-      const product = rows[0];
-      res.render('shop/product-detail', {
-        product: product,
-        pageTitle: product.title,
-        path: '/products'
-      });
+  // findById is a sequelize method to interact with the db
+  Product.findAll({ where: { id: productId } })
+    .then((products) => {
+      if (products.length > 0) {
+        res.render('shop/product-detail', {
+          product: products[0],
+          pageTitle: products[0].title,
+          path: '/products'
+        });
+      }
     })
     .catch(err => console.error(err));
 }

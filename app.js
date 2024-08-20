@@ -4,11 +4,11 @@ const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
 
-const app = express();
 
-// Sets pug as the default template engine
-// app.set('view engine', 'pug');
-// Sets pug as the default template engine
+const app = express();
+const sequelize = require('./util/database');
+
+// Sets ejs as the default template engine
 app.set('view engine', 'ejs');
 // tells express in which folder the templates (pug files) are located
 app.set('views', 'views');
@@ -26,4 +26,9 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3000);
+//Creates tables from the sequelize models in the db
+sequelize.sync()
+  .then((result) => {
+    app.listen(3000);
+  })
+  .catch(err => console.error(err));
