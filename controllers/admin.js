@@ -90,7 +90,9 @@ exports.postDeleteProduct = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  // we shall retriev only the products for one user
+  req.user
+    .getProducts()
     .then((products) => {
       res.render('admin/products', {
         prods: products,

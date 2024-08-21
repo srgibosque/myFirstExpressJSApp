@@ -7,6 +7,8 @@ const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
 const Product = require('./models/product');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
 
 const app = express();
 
@@ -41,11 +43,21 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 //Relation of models
+// A user can have multiple products
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
+User.hasOne(Cart);
+// The next relation is optional. With one direction of the relation is enough (the one above)
+Cart.belongsTo(User);
+
+// MANY TO MANY RELATIONSHIP
+// A Cart has multiple products
+Cart.belongsToMany(Product, { through: CartItem });
+// A single product can be in many different carts
+Product.belongsToMany(Cart, { through: CartItem });
 
 //Creates tables from the sequelize models in the db
-sequelize.sync()
+sequelize.sync({ force: true })
   .then((result) => {
     return User.findByPk(1)
   })
