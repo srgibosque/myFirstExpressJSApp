@@ -34,13 +34,14 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  // Creates a product into the db. It's a sequelize method
-  Product.create({
-    title: title,
-    price: price,
-    imageUrl: imageUrl,
-    description: description
-  })
+  // Thanks to the association sequelize creates the method for creating a product from the user object. It is stored in the db
+  req.user
+    .createProduct({
+      title: title,
+      price: price,
+      imageUrl: imageUrl,
+      description: description
+    })
     .then((result) => {
       console.log('Created product');
       res.redirect('/admin/products');
@@ -56,7 +57,7 @@ exports.postEditProduct = (req, res, next) => {
   const updatedDescription = req.body.description;
   Product.findOne({ where: { id: prodId } })
     .then((product) => {
-      if(!product){
+      if (!product) {
         console.log("Product not found");
         return
       }
@@ -77,17 +78,16 @@ exports.postEditProduct = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findByPk(prodId)
-  .then(product => {
-    //returns a promise that the product will be deleted
-    return product.destroy();
-  })
-  .then(result => {
-    console.log('Product deleted successfully');
-    res.redirect('/admin/products');
-  })
-  .catch(err => console.error(err));
+    .then(product => {
+      //returns a promise that the product will be deleted
+      return product.destroy();
+    })
+    .then(result => {
+      console.log('Product deleted successfully');
+      res.redirect('/admin/products');
+    })
+    .catch(err => console.error(err));
 }
-
 
 exports.getProducts = (req, res, next) => {
   Product.findAll()
