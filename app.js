@@ -9,6 +9,8 @@ const Product = require('./models/product');
 const User = require('./models/user');
 const Cart = require('./models/cart');
 const CartItem = require('./models/cart-item');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
 
 const app = express();
 
@@ -56,6 +58,14 @@ Cart.belongsToMany(Product, { through: CartItem });
 // A single product can be in many different carts
 Product.belongsToMany(Cart, { through: CartItem });
 
+// ONE TO MANY RELATIONSHIP
+// A single order belongs to one user
+Order.belongsTo(User);
+// A user can have more than one order
+User.hasMany(Order);
+// An order can have multiple products. OrderItem is the in between table
+Order.belongsToMany(Product, { through: OrderItem });
+
 //Creates tables from the sequelize models in the db
 sequelize.sync()
   .then((result) => {
@@ -68,10 +78,8 @@ sequelize.sync()
     return user
   })
   .then((user) => {
-    if(!user){
-      return user.createCart();
-    }
-    return
+    return user.createCart();
+
     // console.log(user);
   }).then((cart) => {
     app.listen(3000);
